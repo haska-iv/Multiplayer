@@ -1129,11 +1129,11 @@ MonoBehaviour:
   animator: {fileID: 4071349007505264015}
   body: {fileID: 3393106812153610407}
   mat: {fileID: 3558587589300760828}
+  scoreText: {fileID: 7901891129982928945}
   speed: 10
   impulseDistance: 5
   colorChangeDuration: 3
-  scoreText: {fileID: 7901891129982928945}
-  onBoost: 0
+  isDashing: 0
 --- !u!54 &3393106812153610407
 Rigidbody:
   m_ObjectHideFlags: 0

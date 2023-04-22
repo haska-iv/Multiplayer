@@ -38,6 +38,8 @@ public class Player : NetworkBehaviour
             View.active.gameObject.SetActive(false);
         else
             View.active.SetTarget(transform);
+        
+        currentScore = 0;
     }
 
     private void Update()

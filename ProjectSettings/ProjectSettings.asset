@@ -51,7 +51,7 @@ PlayerSettings:
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
-  m_StackTraceTypes: 010000000100000001000000010000000100000001000000
+  m_StackTraceTypes: 000000000000000000000000000000000000000001000000
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: -1
   iosUseCustomAppBackgroundBehavior: 0
@@ -154,9 +154,10 @@ PlayerSettings:
   resetResolutionOnWindowResize: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.AleksandrIvanov.Multiplayer
   buildNumber:
-    Standalone: 0
+    Standalone: 0.1
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
@@ -174,7 +175,7 @@ PlayerSettings:
   APKExpansionFiles: 0
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 1
-  VertexChannelCompressionMask: 4054
+  VertexChannelCompressionMask: -1
   iPhoneSdkVersion: 988
   iOSTargetOSVersionString: 12.0
   tvOSSdkVersion: 0
@@ -527,7 +528,7 @@ PlayerSettings:
     m_Devices:
     - Oculus
     - OpenVR
-  m_DefaultShaderChunkSizeInMB: 16
+  m_DefaultShaderChunkSizeInMB: 9
   m_DefaultShaderChunkCount: 0
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
@@ -543,6 +544,8 @@ PlayerSettings:
   - m_BuildTarget: iPhone
     m_EncodingQuality: 1
   - m_BuildTarget: tvOS
+    m_EncodingQuality: 1
+  - m_BuildTarget: Standalone
     m_EncodingQuality: 1
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetNormalMapEncoding:
@@ -808,7 +811,8 @@ PlayerSettings:
     Standalone: MIRROR;MIRROR_57_0_OR_NEWER;MIRROR_58_0_OR_NEWER;MIRROR_65_0_OR_NEWER;MIRROR_66_0_OR_NEWER;MIRROR_2022_9_OR_NEWER;MIRROR_2022_10_OR_NEWER;MIRROR_70_0_OR_NEWER;MIRROR_71_0_OR_NEWER;MIRROR_73_OR_NEWER;MIRROR_78_OR_NEWER
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Standalone: 0
   il2cppCompilerConfiguration: {}
   managedStrippingLevel:
     EmbeddedLinux: 1

@@ -1,4 +1,3 @@
-using UnityEngine;
 using Mirror;
 
 public class Game : NetworkBehaviour
@@ -7,6 +6,9 @@ public class Game : NetworkBehaviour
     public static Game active { get { if (_active == null) _active = FindObjectOfType<Game>(); return _active; } }
 
     public int scoreToWin = 3;
+
+    private NetworkManager networkManager;
+    private float restartdelay = 5f;
 
     //this part can use list of players score and players ids
     private int player1Score;
@@ -18,6 +20,12 @@ public class Game : NetworkBehaviour
     private uint player2Id = 0;
     private uint player3Id = 0;
     private uint player4Id = 0;
+
+
+    private void Start()
+    {
+        networkManager = FindObjectOfType<NetworkManager>();
+    }
 
     private bool isGameOver
     {
@@ -33,7 +41,18 @@ public class Game : NetworkBehaviour
     private void CheckWinCondition()
     {
         if (isGameOver)
-            NetworkManager.singleton.StopHost();
+        {
+            Invoke(nameof(Restart), restartdelay);
+        }
+    }
+
+    private void Restart()
+    {
+        if (NetworkServer.active && NetworkClient.isConnected)
+        {
+            NetworkServer.SetAllClientsNotReady();
+            networkManager.ServerChangeScene(networkManager.onlineScene);
+        }
     }
 
     [Command]
