@@ -10,6 +10,8 @@ public class Player : NetworkBehaviour
     public SkinnedMeshRenderer mat;
     public TMPro.TextMeshProUGUI scoreText;
 
+    private Transform view => View.active.transform;
+
     [Header("Parameters")]
     public float speed = 10f;
     public float impulseDistance = 5f;
@@ -34,9 +36,10 @@ public class Player : NetworkBehaviour
 
     private void Start()
     {
-        if (!isLocalPlayer)
-            View.active.gameObject.SetActive(false);
-        else
+        //if (!isLocalPlayer)
+        //    View.active.gameObject.SetActive(false);
+        //else
+        if (isLocalPlayer)
             View.active.SetTarget(transform);
         
         currentScore = 0;
@@ -48,8 +51,12 @@ public class Player : NetworkBehaviour
             return;
 
         setDirection = !Input.anyKeyDown;
-        direction.x = Input.GetAxisRaw("Horizontal");
-        direction.z = Input.GetAxisRaw("Vertical");
+        direction = view.forward * Input.GetAxisRaw("Vertical");
+        direction += view.right * Input.GetAxisRaw("Horizontal");
+        direction.y = 0f;
+        direction.Normalize(); 
+
+        
 
         if (setDirection)
         {
@@ -60,7 +67,7 @@ public class Player : NetworkBehaviour
         else
             body.drag = 10f;
 
-        animator.SetFloat("Run", body.velocity.magnitude);
+        SetRun(body.velocity.magnitude);
 
         if (Input.GetMouseButtonDown(0))
             isDashing = true;
@@ -99,6 +106,12 @@ public class Player : NetworkBehaviour
                 StartCoroutine(ChangeColor());
             }
         }
+    }
+
+    [Command]
+    public void SetRun(float run)
+    {
+        animator.SetFloat("Run", run);
     }
 
     IEnumerator ChangeColor()

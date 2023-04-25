@@ -34,7 +34,7 @@ public class View : NetworkBehaviour
 
         rotationX += Input.GetAxis("Mouse X") * sensitivity;
         rotationY -= Input.GetAxis("Mouse Y") * sensitivity;
-        rotationY = Mathf.Clamp(rotationY, -90f, 90f);
+        rotationY = Mathf.Clamp(rotationY, -40f, 0f);
         transform.rotation = Quaternion.Euler(rotationY, rotationX, 0f);
     }
 }
