@@ -41,7 +41,7 @@ public class Player : NetworkBehaviour
         //else
         if (isLocalPlayer)
             View.active.SetTarget(transform);
-        
+
         currentScore = 0;
     }
 
@@ -54,9 +54,7 @@ public class Player : NetworkBehaviour
         direction = view.forward * Input.GetAxisRaw("Vertical");
         direction += view.right * Input.GetAxisRaw("Horizontal");
         direction.y = 0f;
-        direction.Normalize(); 
-
-        
+        direction.Normalize();
 
         if (setDirection)
         {
@@ -80,9 +78,9 @@ public class Player : NetworkBehaviour
 
         if (isDashing)
         {
-            Vector3 dashDirection = transform.forward; 
-            float dashDistance = 5f; 
-            float dashSpeed = dashDistance / 0.5f; 
+            Vector3 dashDirection = transform.forward;
+            float dashDistance = 5f;
+            float dashSpeed = dashDistance / 0.5f;
             body.AddForce(dashDirection * dashSpeed, ForceMode.VelocityChange);
             StartCoroutine(EndDash());
         }
@@ -98,14 +96,32 @@ public class Player : NetworkBehaviour
                 return;
             else if (enemy.isDashing)
             {
-                enemy.currentScore++;
-                enemy.scoreText.text = $"{currentScore}";
-                Game.active.CmdIncreaseScore(enemy.netId);
-                isImmortal = true;
-                mat.material.color = changeColor;
-                StartCoroutine(ChangeColor());
+                
+                if (isServer)
+                {
+                    Debug.Log("server " + enemy.name);
+                    Debug.Log(this.name);
+                    ChangeColorClient(changeColor, enemy);
+                }
+                else
+                {
+                    Debug.Log("not server " + enemy.name);
+                    mat.material.color = changeColor;
+                    isImmortal = true;
+                    StartCoroutine(ChangeColor());
+                }
             }
         }
+    }
+
+    [ClientRpc]
+    public void ChangeColorClient(Color color, Player enemy)
+    {
+        enemy.currentScore++;
+        enemy.scoreText.text = $"{currentScore}";
+        mat.material.color = changeColor;
+        isImmortal = true;
+        StartCoroutine(ChangeColor());
     }
 
     [Command]
